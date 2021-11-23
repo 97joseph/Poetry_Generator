@@ -2,7 +2,7 @@
 # Project 04 - Poetry Generator
 # student
 # number
-# November 8, 2021
+# November 23, 2021
 # poetry_generator.py (v.4)
 
 import nltk
