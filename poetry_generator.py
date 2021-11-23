@@ -1,8 +1,7 @@
 # IAE 101
 # Project 04 - Poetry Generator
-# Eshan Shakrani
-# 112802596
-# eshakrani
+# student
+# number
 # November 8, 2021
 # poetry_generator.py (v.4)
 
