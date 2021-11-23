@@ -1,9 +1,9 @@
 # IAE 101
 # Project 04 - Poetry Generator
-# Name
-# Student ID
-# netid
-# Date
+# Eshan Shakrani
+# 112802596
+# eshakrani
+# November 8, 2021
 # poetry_generator.py (v.4)
 
 import nltk
@@ -170,7 +170,14 @@ def stress_test():
 # must contain two strings of 5 words each. Each string
 # corresponds to a line. The two lines you return must rhyme.
 def generate_rhyming_lines():
-    return -1
+    first = random_word_generator(None, 5)
+    second = random_word_generator(None, 4)
+    # lastword = first[-1]
+    rhymes = get_rhymes(first[-1])
+    if len(rhymes) == 0:
+        return generate_rhyming_lines()
+    second.append(random.choice(rhymes))
+    return [" ".join(first), " ".join(second)]
 
 # generate_10_syllable_lines()
 # Complete this function so that it returns a list. The list
@@ -178,7 +185,31 @@ def generate_rhyming_lines():
 # corresponds to a line and each line must be composed of words
 # whose number of syllables add up to 10 syllables total.
 def generate_10_syllable_lines():
-    return -1
+    lines = []
+    for _ in range(2):
+        words = []
+        syllables = 0
+        while True:
+            # print(words)
+            syl = 0
+            while (syl == 0):
+                word = random_word_generator(None, 2)[1]
+                syl = count_syllables(word)
+            # words.append((word := random_word_generator(None, 2)[0]))
+            words.append(word)
+            syllables += count_syllables(word)
+            # print(word, syllables)
+            if syllables == 10:
+                lines.append(" ".join(words))
+                words = []
+                break 
+            elif syllables > 10:
+                syllables -= count_syllables(words.pop())
+            else:
+                continue 
+            
+    return lines 
+
 
 
 # generate_metered_line()
@@ -199,8 +230,29 @@ def generate_metered_line():
 #     -last word choice constrained by rhyming pattern
 # Add any parameters to this function you need to bring in
 # information about how a particular line should be constructed.
-def generate_line():
-    return -1
+def generate_line(num_syllables):
+    words = []
+    syllables = 0
+    while True:
+        # print(words)
+        syl = 0
+        word = None 
+        while (syl == 0 and word not in words):
+            word = random_word_generator(None, 2)[1]
+            syl = count_syllables(word)
+        # words.append((word := random_word_generator(None, 2)[0]))
+        words.append(word)
+        syllables += count_syllables(word)
+        # print(word, syllables)
+        if syllables == num_syllables:
+            # words = []
+            break 
+        elif syllables > num_syllables:
+            syllables -= count_syllables(words.pop())
+        else:
+            continue 
+            
+    return " ".join(words)
 
 # generate_poem()
 # Use this function to construct your poem, line by line.
@@ -210,12 +262,12 @@ def generate_line():
 #     -The total number of lines
 #     -How the lines relate to each other (rhyming, syllable counts, etc)
 def generate_poem():
-    return -1
+    return "\n".join([generate_line(5), generate_line(7), generate_line(5)])
 
 
 if __name__ == "__main__":
     #test()
-    stress_test()
+    # stress_test()
     print()
     '''
     result1 = generate_rhyming_lines()
@@ -229,7 +281,13 @@ if __name__ == "__main__":
     result3 = generate_metered_line()
     print(result3)
     print()
-    
+    '''
     my_poem = generate_poem()
     print(my_poem)
-    '''
+
+    poem1 = open("poem1.txt", "w")
+    poem2 = open("poem2.txt", "w")
+
+    poem1.write(my_poem)
+    poem2.write(generate_poem())
+    
